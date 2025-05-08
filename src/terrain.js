@@ -262,18 +262,84 @@ export const terrain = (function() {
       for (let v of this._plane.geometry.vertices) {
         //get coordinates of trees right
         if(v.z == maxHeight){
-            const treeloader = new THREE.CubeTextureLoader();
-            const barktex = treeloader.load(['../public/Flower_texture.png','../public/Flower_texture.png','../public/Flower_texture.png','../public/Flower_texture.png','../public/Flower_texture.png','../public/Flower_texture.png']);
-      
-            const geometry = new THREE.BoxGeometry(50,200,50);
-            const geometry2 = new THREE.BoxGeometry(300,100,300);
-            const geometry3 = new THREE.BoxGeometry(250,50,250);
-            const geometry4 = new THREE.BoxGeometry(175,50,175);
-            const geometry5 = new THREE.BoxGeometry(350,30,350);
-            const material = new THREE.MeshBasicMaterial({ color: 0xffb6c1 });
+
+
+          //leaf layer colors
+            const material = new THREE.MeshBasicMaterial({ color: 0xffadad });
+            const material1a = new THREE.MeshBasicMaterial({ color: 0xffd6a5 });
+            const material1b = new THREE.MeshBasicMaterial({ color: 0xfdffb6 });
+            const material1c = new THREE.MeshBasicMaterial({ color: 0xcaffbf });
+            const material1d = new THREE.MeshBasicMaterial({ color: 0x9bf8ff });
+            const material1e = new THREE.MeshBasicMaterial({ color: 0xa0c4ff });
+            const material1f = new THREE.MeshBasicMaterial({ color: 0xbdb2ff });
+
+            //extra
             const material2 = new THREE.MeshBasicMaterial({color: 0xffffff }); 
             const material3 = new THREE.MeshBasicMaterial({color: 0xc4a484 });
             const material4 = new THREE.MeshBasicMaterial({color: 0xff68b9 });
+
+            //extra dimension materials on trunk
+            const material_a = new THREE.MeshBasicMaterial({color: 0xb5836b});
+            const treeloader = new THREE.CubeTextureLoader();
+            const barktex = treeloader.load(['../public/Flower_texture.png','../public/Flower_texture.png','../public/Flower_texture.png','../public/Flower_texture.png','../public/Flower_texture.png','../public/Flower_texture.png']);
+
+            //trunk geometry
+            const geometry = new THREE.BoxGeometry(25,300,25);//center
+            const geometry_a = new THREE.BoxGeometry(35,300,10);//add dimension on x side
+            const geometry_b = new THREE.BoxGeometry(10,300,35);//add dimension on z side
+            //form tree trunk
+            const mesh1 = new THREE.Mesh(geometry, material3); //trunk
+            mesh1.position.set(v.x,0,v.y); //tree trunk
+            const mesh1a = new THREE.Mesh(geometry_a, material_a); //trunk
+            mesh1a.position.set(v.x,0,v.y); //tree trunk
+            const mesh1b = new THREE.Mesh(geometry_b, material_a); //trunk
+            mesh1b.position.set(v.x,0,v.y); //tree trunk
+
+            mesh1.castShadow = true;
+            mesh1.receiveShadow = true;
+            mesh1a.castShadow = true;
+            mesh1a.receiveShadow = true;
+            mesh1b.castShadow = true;
+            mesh1b.receiveShadow = true;
+
+            this.scene.add(mesh1);
+            this.trees.push(mesh1);
+            this.scene.add(mesh1a);
+            this.trees.push(mesh1a);
+            this.scene.add(mesh1b);
+            this.trees.push(mesh1b);
+
+
+
+
+            //geometry for parts of trees
+
+            ///first leaf layer
+            const geometry2 = new THREE.BoxGeometry(210,40,210);
+            const geometry3 = new THREE.BoxGeometry(200,10,200);
+            //second leaf layer
+            const geometry2a = new THREE.BoxGeometry(180,37,180);
+            const geometry3a = new THREE.BoxGeometry(180,10,180);
+            //third leaf layer
+            const geometry2b = new THREE.BoxGeometry(160,34,160);
+            const geometry3b = new THREE.BoxGeometry(160,10,160);
+            //fourth leaf layer
+            const geometry2c = new THREE.BoxGeometry(140,31,140);
+            const geometry3c = new THREE.BoxGeometry(140,10,140);
+            //fifth leaf layer
+            const geometry2d = new THREE.BoxGeometry(120,28,120);
+            const geometry3d = new THREE.BoxGeometry(120,10,120);
+            //sixth leaf layer
+            const geometry2e = new THREE.BoxGeometry(100,25,100);
+            const geometry3e = new THREE.BoxGeometry(100,10,100);
+            //seventh leaf layer
+            const geometry2f = new THREE.BoxGeometry(80,22,80);
+            const geometry3f = new THREE.BoxGeometry(80,10,80);
+
+            //extra
+            const geometry4 = new THREE.BoxGeometry(175,50,175);
+            const geometry5 = new THREE.BoxGeometry(350,30,350);
+
             //const mesh = new THREE.Mesh(geometry, map:snow_tex);
             //barktex.wrapS = THREE.RepeatWrapping;
             //barktex.wrapT = THREE.RepeatWrapping;
@@ -289,28 +355,147 @@ export const terrain = (function() {
                 }
               ));
   
+
+            //add tree trunks, tree leaves, and clouds
   
-            const mesh1 = new THREE.Mesh(geometry, material3);
+            //first leaf layer
             const mesh2 = new THREE.Mesh(geometry2,material);
             const mesh3 = new THREE.Mesh(geometry3, material2);
+            //second leaf layer
+            const mesh2a = new THREE.Mesh(geometry2a,material1a);
+            const mesh3a = new THREE.Mesh(geometry3a, material2);
+            //third leaf layer
+            const mesh2b = new THREE.Mesh(geometry2b,material1b);
+            const mesh3b = new THREE.Mesh(geometry3b, material2);
+            //fourth leaf layer
+            const mesh2c = new THREE.Mesh(geometry2c,material1c);
+            const mesh3c = new THREE.Mesh(geometry3c, material2);
+            //fifth leaf layer
+            const mesh2d = new THREE.Mesh(geometry2d,material1d);
+            const mesh3d = new THREE.Mesh(geometry3d, material2);
+            //sixth leaf layer
+            const mesh2e = new THREE.Mesh(geometry2e,material1e);
+            const mesh3e = new THREE.Mesh(geometry3e, material2);
+            //seventh leaf layer
+            const mesh2f = new THREE.Mesh(geometry2f,material1f);
+            const mesh3f = new THREE.Mesh(geometry3f, material2);
+
+
+
+
             const mesh4 = new THREE.Mesh(geometry4, material4);
             const mesh5 = new THREE.Mesh(geometry5, material4);
   
-            mesh1.position.set(v.x,0,v.y);
-            mesh2.position.set(v.x,150,v.y);
-            mesh3.position.set(v.x,200,v.y);
-            mesh4.position.set(v.x,100,v.y);
-            mesh5.position.set(v.x,175,v.y);
-            this.scene.add(mesh1);
+
+            
+
+            const rads = 0.8971;
+            //place first leaf layer
+
+            mesh2.position.set(v.x,160,v.y); //+40
+            //mesh2.rotation.y = Math.PI / 9;
+            mesh2.castShadow = true;
+            mesh2.receiveShadow = true;
             this.scene.add(mesh2);
-            this.scene.add(mesh3);
-            this.scene.add(mesh4);
-            this.scene.add(mesh5);
-            this.trees.push(mesh1);
             this.trees.push(mesh2);
+
+            mesh3.position.set(v.x,190,v.y); //+10
+            //mesh3.rotation.y = Math.PI / 9;
+            mesh3.castShadow = true;
+            mesh3.receiveShadow = true;
+            this.scene.add(mesh3);
             this.trees.push(mesh3);
-            this.trees.push(mesh4);
-            this.trees.push(mesh5); 
+
+            //place second leaf layer
+            mesh2a.position.set(v.x,200,v.y); //+37
+            mesh2a.rotation.y = rads;
+            mesh2a.castShadow = true;
+            mesh2a.receiveShadow = true;
+            this.scene.add(mesh2a);
+            this.trees.push(mesh2a);
+
+            mesh3a.position.set(v.x,237,v.y); //+10
+            mesh3a.rotation.y = rads;
+            mesh3a.castShadow = true;
+            mesh3a.receiveShadow = true;
+            this.scene.add(mesh3a);
+            this.trees.push(mesh3a);
+
+            //place third leaf layer
+            mesh2b.position.set(v.x,247,v.y); //+34
+            mesh2b.rotation.y = 2 * rads;
+            mesh2b.castShadow = true;
+            mesh2b.receiveShadow = true;
+            this.scene.add(mesh2b);
+            this.trees.push(mesh2b);
+
+            mesh3b.position.set(v.x,281,v.y); //+10
+            mesh3b.rotation.y = 2 * rads;
+            mesh3b.castShadow = true;
+            mesh3b.receiveShadow = true;
+            this.scene.add(mesh3b);
+            this.trees.push(mesh3b);
+            
+            //place fourth leaf layer
+            mesh2c.position.set(v.x,291,v.y); //+31
+            mesh2c.rotation.y = 3 * rads;
+            mesh2c.castShadow = true;
+            mesh2c.receiveShadow = true;
+            this.scene.add(mesh2c);
+            this.trees.push(mesh2c);
+
+            mesh3c.position.set(v.x,322,v.y); //+10
+            mesh3c.rotation.y = 3 * rads;
+            mesh3c.castShadow = true;
+            mesh3c.receiveShadow = true;
+            this.scene.add(mesh3c);
+            this.trees.push(mesh3c);
+            
+            //place fifth leaf layer
+            mesh2d.position.set(v.x,332,v.y); //+28
+            mesh2d.rotation.y = 4 * rads;
+            mesh2d.castShadow = true;
+            mesh2d.receiveShadow = true;
+            this.scene.add(mesh2d);
+            this.trees.push(mesh2d);
+
+            mesh3d.position.set(v.x,360,v.y); //+10
+            mesh3d.rotation.y = 4 * rads;
+            mesh3d.castShadow = true;
+            mesh3d.receiveShadow = true;
+            this.scene.add(mesh3d);
+            this.trees.push(mesh3d);
+           
+            //place sixth leaf layer
+            mesh2e.position.set(v.x,370,v.y); //+25
+            mesh2e.rotation.y = 5 * rads;
+            mesh2e.castShadow = true;
+            mesh2e.receiveShadow = true;
+            this.scene.add(mesh2e);
+            this.trees.push(mesh2e);
+
+            mesh3e.position.set(v.x,395,v.y); //+10
+            mesh3e.rotation.y = 5 * rads;
+            mesh3e.castShadow = true;
+            mesh3e.receiveShadow = true;
+            this.scene.add(mesh3e);
+            this.trees.push(mesh3e);
+           
+            //place seventh leaf layer
+            mesh2f.position.set(v.x,405,v.y); //+22
+            mesh2f.rotation.y = 6 * rads;
+            mesh2f.castShadow = true;
+            mesh2f.receiveShadow = true;
+            this.scene.add(mesh2f);
+            this.trees.push(mesh2f);
+
+            mesh3f.position.set(v.x,427,v.y); //+10
+            mesh3f.rotation.y = 6 * rads;
+            mesh3f.castShadow = true;
+            mesh3f.receiveShadow = true;
+            this.scene.add(mesh3f);
+            this.trees.push(mesh3f);
+
         }
 
       }
